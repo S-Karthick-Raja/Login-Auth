@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { showErrMsg, showSuccessMsg } from '../../utils/notification/Notification'
-import { dispatchLogin } from '../../../redux/actions/usersAction'
+import { dispatchLogin } from '../../../redux/actions/authAction'
 import { useDispatch } from 'react-redux'
 import { GoogleLogin } from 'react-google-login';
 import { API_URL } from '../../../global_constant'
-
 
 const initialState = {
     email: '',
@@ -60,6 +59,10 @@ function Login() {
         }
     }
 
+    // const responseGoogle = (response) => {
+    //     console.log(response);
+    // }
+
     return (
         <div className="login_page">
             <h2>Login</h2>
@@ -88,12 +91,19 @@ function Login() {
             <div className="hr">Or Login With</div>
 
             <div className="social">
-                <GoogleLogin
-                    clientId="Your google client id"
+                {/* <GoogleLogin
+                    clientId="243544352137-hj5od875blc0osn2rqljogilnmftvler.apps.googleusercontent.com"
                     buttonText="Login with google"
                     onSuccess={responseGoogle}
                     cookiePolicy={'single_host_origin'}
-                />
+                /> */}
+                <GoogleLogin
+                    clientId="243544352137-hj5od875blc0osn2rqljogilnmftvler.apps.googleusercontent.com"
+                    buttonText="Login with google"
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                    cookiePolicy={'single_host_origin'}
+                />,
             </div>
 
             <p>New Customer? <Link to="/register">Register</Link></p>

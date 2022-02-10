@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
+import { API_URL } from '../../global_constant'
 
 
 function Header() {
@@ -12,7 +13,7 @@ function Header() {
 
     const handleLogout = async () => {
         try {
-            await axios.get('/user/logout')
+            await axios.get(`${API_URL}/user/logout`)
             localStorage.removeItem('firstLogin')
             window.location.href = "/";
         } catch (err) {

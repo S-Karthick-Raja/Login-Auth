@@ -1,12 +1,13 @@
-import React, {useState, useEffect} from 'react'
-import {useParams, useHistory} from 'react-router-dom'
-import {useSelector} from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useParams, useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import axios from 'axios'
-import {showSuccessMsg, showErrMsg} from '../../utils/notification/Notification'
+import { showSuccessMsg, showErrMsg } from '../../utils/notification/Notification'
+import { API_URL } from '../../../global_constant'
 
 
 function EditUser() {
-    const {id} = useParams()
+    const { id } = useParams()
     const history = useHistory()
     const [editUser, setEditUser] = useState([])
 
@@ -19,25 +20,25 @@ function EditUser() {
     const [num, setNum] = useState(0)
 
     useEffect(() => {
-        if(users.length !== 0){
+        if (users.length !== 0) {
             users.forEach(user => {
-                if(user._id === id){
+                if (user._id === id) {
                     setEditUser(user)
                     setCheckAdmin(user.role === 1 ? true : false)
                 }
             })
-        }else{
+        } else {
             history.push('/profile')
         }
-    },[users, id, history])
+    }, [users, id, history])
 
     const handleUpdate = async () => {
         try {
-            if(num % 2 !== 0){
-                const res = await axios.patch(`/user/update_role/${editUser._id}`, {
+            if (num % 2 !== 0) {
+                const res = await axios.patch(`${API_URL}/user/update_role/${editUser._id}`, {
                     role: checkAdmin ? 1 : 0
                 }, {
-                    headers: {Authorization: token}
+                    headers: { Authorization: token }
                 })
 
                 setSuccess(res.data.msg)
@@ -68,7 +69,7 @@ function EditUser() {
 
                 <div className="form-group">
                     <label htmlFor="name">Name</label>
-                    <input type="text" name="name" defaultValue={editUser.name} disabled/>
+                    <input type="text" name="name" defaultValue={editUser.name} disabled />
                 </div>
 
                 <div className="form-group">
@@ -78,7 +79,7 @@ function EditUser() {
 
                 <div className="form-group">
                     <input type="checkbox" id="isAdmin" checked={checkAdmin}
-                    onChange={handleCheck} />
+                        onChange={handleCheck} />
                     <label htmlFor="isAdmin">isAdmin</label>
                 </div>
 

@@ -5,6 +5,7 @@ import { showErrMsg, showSuccessMsg } from '../../utils/notification/Notificatio
 import { dispatchLogin } from '../../../redux/actions/authAction'
 import { useDispatch } from 'react-redux'
 import { GoogleLogin } from 'react-google-login';
+import { API_URL } from '../../../global_constant'
 
 const initialState = {
     email: '',
@@ -29,7 +30,7 @@ function Login() {
     const handleSubmit = async e => {
         e.preventDefault()
         try {
-            const res = await axios.post('/user/login', { email, password })
+            const res = await axios.post(`${API_URL}/user/login`, { email, password })
             setUser({ ...user, err: '', success: res.data.msg })
 
             localStorage.setItem('firstLogin', true)
@@ -45,7 +46,7 @@ function Login() {
 
     const responseGoogle = async (response) => {
         try {
-            const res = await axios.post('/user/google_login', { tokenId: response.tokenId })
+            const res = await axios.post(`${API_URL}/user/google_login`, { tokenId: response.tokenId })
 
             setUser({ ...user, error: '', success: res.data.msg })
             localStorage.setItem('firstLogin', true)

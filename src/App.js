@@ -6,6 +6,7 @@ import {dispatchLogin, fetchUser, dispatchGetUser} from './redux/actions/authAct
 import Header from './components/header/Header'
 import Body from './components/body/Body'
 import axios from 'axios';
+import { API_URL } from './global_constant';
 
 function App() {
   const dispatch = useDispatch()
@@ -16,7 +17,7 @@ function App() {
     const firstLogin = localStorage.getItem('firstLogin')
     if(firstLogin){
       const getToken = async () => {
-        const res = await axios.post('/user/refresh_token', null)
+        const res = await axios.post(`${API_URL}/user/refresh_token`, null)
         dispatch({type: 'GET_TOKEN', payload: res.data.access_token})
       }
       getToken()

@@ -8,6 +8,7 @@ import Body from './components/body/Body'
 import axios from 'axios';
 import { API_URL } from './global_constant';
 
+
 function App() {
   const dispatch = useDispatch()
   const token = useSelector(state => state.token)
@@ -46,6 +47,8 @@ function App() {
       </div>
     </Router>
   );
+
+  // "proxy": "http://localhost:5000"
 }
 
 export default App;

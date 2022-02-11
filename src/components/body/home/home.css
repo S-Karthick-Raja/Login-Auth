@@ -1,0 +1,14 @@
+.home_page {
+  height: 100vh;
+  padding: 20px;
+  background-image: url("https://res.cloudinary.com/karthy/image/upload/v1644272748/avatar/BG_uwg9sl.png");
+  object-fit: contain;
+  color: #333;
+}
+.home_page h2 {
+  font-size: 2rem;
+  margin: 10px 0;
+  color: whitesmoke;
+  display: flex;
+  justify-content: center;
+}

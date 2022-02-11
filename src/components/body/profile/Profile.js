@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { isLength, isMatch } from '../../utils/validation/Validation'
 import { showSuccessMsg, showErrMsg } from '../../utils/notification/Notification'
 import { fetchAllUsers, dispatchGetAllUsers } from '../../../redux/actions/usersAction'
@@ -19,7 +18,7 @@ function Profile() {
     const auth = useSelector(state => state.auth)
     const token = useSelector(state => state.token)
 
-    const users = useSelector(state => state.users)
+    // const users = useSelector(state => state.users)
 
     const { user, isAdmin } = auth
     const [data, setData] = useState(initialState)
@@ -27,7 +26,7 @@ function Profile() {
 
     const [avatar, setAvatar] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [callback, setCallback] = useState(false)
+    // const [callback, setCallback] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -37,7 +36,8 @@ function Profile() {
                 dispatch(dispatchGetAllUsers(res))
             })
         }
-    }, [token, isAdmin, dispatch, callback])
+    }, [token, isAdmin, dispatch])
+
 
     const handleChange = e => {
         const { name, value } = e.target
@@ -111,24 +111,6 @@ function Profile() {
         if (password) updatePassword()
     }
 
-    const handleDelete = async (id) => {
-        try {
-            if (user._id !== id) {
-                if (window.confirm("Are you sure you want to delete this account?")) {
-                    setLoading(true)
-                    await axios.delete(`${API_URL}/user/delete/${id}`, {
-                        headers: { Authorization: token }
-                    })
-                    setLoading(false)
-                    setCallback(!callback)
-                }
-            }
-
-        } catch (err) {
-            setData({ ...data, err: err.response.data.msg, success: '' })
-        }
-    }
-
     return (
         <>
             <div>
@@ -176,54 +158,11 @@ function Profile() {
                     <div>
                         <em style={{ color: "crimson" }}>
                             * If you update your password here, you will not be able
-                            to login quickly using google.
+                            to login quickly using google .
                         </em>
                     </div>
 
                     <button disabled={loading} onClick={handleUpdate}>Update</button>
-                </div>
-
-                <div className="col-right">
-                    <h2>{isAdmin ? "Users" : "My Orders"}</h2>
-
-                    <div style={{ overflowX: "auto" }}>
-                        <table className="customers">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Admin</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    users.map(user => (
-                                        <tr key={user._id}>
-                                            <td>{user._id}</td>
-                                            <td>{user.name}</td>
-                                            <td>{user.email}</td>
-                                            <td>
-                                                {
-                                                    user.role === 1
-                                                        ? <i className="fas fa-check" title="Admin"></i>
-                                                        : <i className="fas fa-times" title="User"></i>
-                                                }
-                                            </td>
-                                            <td>
-                                                <Link to={`/edit_user/${user._id}`}>
-                                                    <i className="fas fa-edit" title="Edit"></i>
-                                                </Link>
-                                                <i className="fas fa-trash-alt" title="Remove"
-                                                    onClick={() => handleDelete(user._id)} ></i>
-                                            </td>
-                                        </tr>
-                                    ))
-                                }
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
         </>

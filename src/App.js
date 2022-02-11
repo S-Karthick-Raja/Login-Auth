@@ -8,7 +8,6 @@ import Body from './components/body/Body'
 import axios from 'axios';
 import { API_URL } from './global_constant';
 
-
 function App() {
   const dispatch = useDispatch()
   const token = useSelector(state => state.token)

@@ -1,5 +1,6 @@
 import ACTIONS from './index'
 import axios from 'axios'
+import { API_URL } from '../../global_constant'
 
 export const dispatchLogin = () => {
     return {
@@ -8,8 +9,8 @@ export const dispatchLogin = () => {
 }
 
 export const fetchUser = async (token) => {
-    const res = await axios.get('/user/infor', {
-        headers: {Authorization: token}
+    const res = await axios.get(`${API_URL}/user/infor`, {
+        headers: { Authorization: token }
     })
     return res
 }

@@ -47,8 +47,6 @@ function App() {
       </div>
     </Router>
   );
-
-  // "proxy": "http://localhost:5000"
 }
 
 export default App;
